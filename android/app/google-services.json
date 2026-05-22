@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "759054251135",
+    "project_id": "akvaryumurunsat-8edd0",
+    "storage_bucket": "akvaryumurunsat-8edd0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759054251135:android:1202ad56b7175452513b4a",
+        "android_client_info": {
+          "package_name": "com.example.akvaryum_urun_uretsat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1QWOYgoUjpH4pbq72WXn10D92MrkB_FU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
