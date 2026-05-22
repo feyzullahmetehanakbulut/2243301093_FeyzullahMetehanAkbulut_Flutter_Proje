@@ -15,3 +15,11 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+E-posta: feyzo@test.com
+sifre:123456
+
+E posta:test@test.com
+sifre:123456
+
+repo adında boş bir anıma denk geldi ve orada denilmek istenen şeyi çok geç anladım kusuruma bakmayın.
