@@ -4,6 +4,7 @@ import '../../screens/auth/login_page.dart';
 import '../../widgets/page_template.dart';
 import '../../widgets/profile_menu_item.dart';
 import '../../widgets/role_info_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatelessWidget {
   final bool isAdmin;
@@ -57,12 +58,13 @@ class ProfilePage extends StatelessWidget {
             const SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const LoginPage()),
-                  );
+              child:OutlinedButton.icon(
+                onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+                 Navigator.pushReplacement(
+                 context,
+                   MaterialPageRoute(builder: (_) => const LoginPage()),
+                 );
                 },
                 icon: const Icon(Icons.logout),
                 label: const Text('Çıkış Yap'),

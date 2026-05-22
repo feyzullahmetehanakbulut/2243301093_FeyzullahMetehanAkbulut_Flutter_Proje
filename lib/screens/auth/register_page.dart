@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../../data/app_data.dart';
+import '../../models/app_log.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,22 +17,60 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
 
   bool passwordVisible = false;
+  bool isLoading = false;
 
-  void register() {
-    if (nameController.text.trim().isEmpty ||
-        emailController.text.trim().isEmpty ||
-        passwordController.text.trim().isEmpty) {
+  Future<void> register() async {
+    final name = nameController.text.trim();
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (name.isEmpty || email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Lütfen tüm alanları doldurun')),
       );
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Üyelik oluşturuldu')),
-    );
+    setState(() {
+      isLoading = true;
+    });
 
-    Navigator.pop(context);
+    try {
+      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      await userCredential.user?.updateDisplayName(name);
+
+      addLog(
+        LogType.userRegister,
+        'Yeni Kullanıcı Kaydı',
+        'Ad Soyad: $name\nE-posta: $email\nZaman: ${DateTime.now().toLocal()}',
+      );
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Üyelik başarıyla oluşturuldu')),
+      );
+
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Hata: ${e.message}')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Beklenmeyen bir hata oluştu: $e')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -87,11 +129,13 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: register,
-              icon: const Icon(Icons.person_add),
-              label: const Text('Kayıt Ol'),
-            ),
+            isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ElevatedButton.icon(
+                    onPressed: register,
+                    icon: const Icon(Icons.person_add),
+                    label: const Text('Kayıt Ol'),
+                  ),
           ],
         ),
       ),

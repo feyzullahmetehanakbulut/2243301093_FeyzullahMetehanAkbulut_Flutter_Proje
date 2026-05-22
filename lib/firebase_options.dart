@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'akvaryumurunsat-8edd0.firebasestorage.app',
     measurementId: 'G-599VB2DNTZ',
   );
+
 }

@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
-import 'screens/auth/login_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+import 'firebase_options.dart';
+import 'screens/auth/auth_gate.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const AquariumApp());
 }
 
@@ -11,13 +20,9 @@ class AquariumApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Akvaryum Üretim ve Satış',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorSchemeSeed: Colors.teal,
-        useMaterial3: true,
-      ),
-      home: const LoginPage(),
+      title: 'Akvaryum Üretim ve Satış',
+      home: const AuthGate(),
     );
   }
 }

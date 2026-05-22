@@ -1,6 +1,9 @@
 enum LogType {
   orderCreated,
   orderStatus,
+  customerLogin,
+  adminLogin,
+  userRegister,
 }
 
 class AppLog {
